@@ -1,8 +1,8 @@
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 
-import type { ActivePointer } from "./usePointer.ts";
+import type { ActivePointer } from "../hooks/usePointer.ts";
 
-const PICK_DELAY_MS = 3_000;
+const PICK_DELAY_MS = 2_500;
 
 const usePick = (activePointers: Record<number, ActivePointer>) => {
   const activePointerCount = Object.keys(activePointers).length;
@@ -10,7 +10,6 @@ const usePick = (activePointers: Record<number, ActivePointer>) => {
     Object.values(activePointers),
   );
   const timeoutRef = useRef<number | null>(null);
-  const previousPointerCountRef = useRef(0);
 
   const [selectedPointerId, setSelectedPointerId] = useState<number | null>(
     null,
@@ -28,19 +27,14 @@ const usePick = (activePointers: Record<number, ActivePointer>) => {
     }
   };
 
+  if (activePointerCount === 0 && selectedPointerId !== null) {
+    setSelectedPointerId(null);
+  }
+
   useEffect(() => {
-    const hasAddedPointer =
-      activePointerCount > previousPointerCountRef.current;
-
-    previousPointerCountRef.current = activePointerCount;
-
     // if no points reset.
     if (activePointerCount === 0) {
       clearPendingTimeout();
-      return;
-    }
-
-    if (!hasAddedPointer) {
       return;
     }
 

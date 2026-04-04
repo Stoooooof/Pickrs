@@ -46,6 +46,7 @@ const usePointer = () => {
   const [activePointers, setActivePointers] = useState<
     Record<number, ActivePointer>
   >({});
+  const hasNoPointers = Object.keys(activePointers).length === 0;
 
   const upsertPointer = (event: React.PointerEvent<HTMLDivElement>) => {
     const { x, y } = getPointerPosition(event);
@@ -109,6 +110,7 @@ const usePointer = () => {
 
   return {
     activePointers,
+    hasNoPointers,
     handlePointerCancel,
     handlePointerDown,
     handlePointerMove,

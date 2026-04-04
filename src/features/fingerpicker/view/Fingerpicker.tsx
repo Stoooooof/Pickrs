@@ -1,22 +1,22 @@
-import PickerCircle from "./PickerCircle";
-import usePick from "./usePick.ts";
-import usePointer from "./usePointer.ts";
+import PickerCircle from "../components/PickerCircle.tsx";
+import usePick from "../hooks/usePick.ts";
+import usePointer from "../hooks/usePointer.ts";
 
 const Fingerpicker = () => {
   const {
     activePointers,
+    hasNoPointers,
     handlePointerCancel,
     handlePointerDown,
     handlePointerMove,
     handlePointerUp,
   } = usePointer();
   const { selectedPointerColor } = usePick(activePointers);
-  const hasNoPointers = Object.keys(activePointers).length === 0;
 
   return (
     <section
       aria-label="Finger picker"
-      className="fingerpicker-surface relative h-full w-full touch-none select-none overflow-hidden rounded-3xl border border-white/10 bg-neutral-950 transition-colors duration-300"
+      className="fingerpicker-surface relative h-full w-full touch-none select-none overflow-hidden bg-neutral-950 transition-colors duration-300"
       onContextMenu={(event) => event.preventDefault()}
       onPointerCancel={handlePointerCancel}
       onPointerDown={handlePointerDown}

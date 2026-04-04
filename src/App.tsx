@@ -1,10 +1,11 @@
-import Fingerpicker from "./fingerpicker/Fingerpicker";
+import PageLayout from "./components/Layout.tsx";
+import Fingerpicker from "./features/fingerpicker/view/Fingerpicker.tsx";
 
 function App() {
   return (
-    <section className="h-dvh w-dvw">
+    <PageLayout>
       <Fingerpicker />
-    </section>
+    </PageLayout>
   );
 }
 
