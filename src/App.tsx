@@ -6,7 +6,7 @@ import Home from "./features/home/view/Home.tsx";
 
 function Layout() {
   return (
-    <div className="relative h-dvh w-dvw overflow-hidden bg-gray-900">
+    <div className="relative h-dvh w-dvw">
       <Header />
       <main className="h-full w-full bg-neutral-950">
         <Outlet />

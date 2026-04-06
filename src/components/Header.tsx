@@ -1,92 +1,92 @@
-import { useRef, useState } from "react";
-import PickerIcon from "../../public/PLogo3.png";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useClickOutside } from "../hooks/useClickOutside";
+import DropdownMenu from "./DropdownMenu.tsx";
+import MobileDrawer from "./MobileDrawer.tsx";
+
+const pickerLinks = [
+  { label: "Finger Color Picker", to: "/fingerpicker" },
+  { label: "Picker Wheel (TBD)", to: "/" },
+];
+
+const mobileNavLinkClass = ({ isActive }: { isActive: boolean }) =>
+  `block text-lg transition-colors ${
+    isActive
+      ? "text-white"
+      : "text-white/70 hover:text-white active:text-white/55"
+  }`;
+
+const desktopNavLinkClass = ({ isActive }: { isActive: boolean }) =>
+  `block px-3 py-2 text-sm transition-colors ${
+    isActive
+      ? "text-white"
+      : "text-white/70 hover:text-white active:text-white/55"
+  }`;
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const getNavLinkClassName = ({ isActive }: { isActive: boolean }) =>
-    `block text-lg transition-colors ${
-      isActive
-        ? "text-white"
-        : "text-white/70 hover:text-white active:text-white/55"
-    }`;
-
-  useClickOutside(menuRef, () => {
-    if (open) {
-      setOpen(false);
-    }
-  });
+  const closeMobile = () => setMobileOpen(false);
 
   return (
     <header className="sticky top-0 z-30 shadow-md">
       <nav aria-label="Primary navigation">
-        <div className="relative flex h-16  items-center justify-center bg-neutral-900 text-white">
+        <div className="relative flex h-16 items-center justify-center border-b border-white/10 bg-neutral-950 px-4 text-white sm:px-6 md:justify-start md:gap-6">
+          {/* Mobile menu button */}
           <button
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            aria-controls="primary-menu"
-            onClick={() => setOpen(!open)}
-            className="absolute left-4 px-1 py-2 text-sm font-medium text-white/70 transition-colors hover:text-white active:text-white/55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="absolute left-4 px-1 py-2 text-sm font-medium text-white/70 transition-colors hover:text-white active:text-white/55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white md:hidden"
             type="button"
           >
-            <span aria-hidden="true">{open ? "X" : "☰"}</span>
+            <span aria-hidden="true">☰</span>
           </button>
 
           <NavLink
             to="/"
-            onClick={() => setOpen(false)}
+            onClick={closeMobile}
             className="text-sm font-semibold uppercase tracking-[0.3em] text-white"
           >
             Pickr
           </NavLink>
-        </div>
 
-        <div
-          className={`fixed inset-x-0 bottom-0 top-0 bg-black/40 transition-opacity duration-300 ${
-            open
-              ? "pointer-events-auto opacity-100"
-              : "pointer-events-none opacity-0"
-          }`}
-          aria-hidden={!open}
-        >
-          <div
-            id="primary-menu"
-            className={`absolute left-0 top-0 bottom-0 z-10 w-full md:rounded-r-2xl border-r-indigo-500  bg-neutral-800 p-6 text-white shadow-lg transition-transform duration-300 ease-out sm:w-96 ${
-              open ? "translate-x-0" : "-translate-x-full"
-            }`}
-            ref={menuRef}
-          >
-            <section className="flex justify-between pb-6">
-              <img src={PickerIcon} alt="Picker Logo" width="42" height="42" />
-              <button type="button" onClick={() => setOpen(false)}>
-                x
-              </button>
-            </section>
-            <ul className="flex flex-col gap-3">
-              <li>
-                <NavLink
-                  to="/"
-                  onClick={() => setOpen(false)}
-                  className={getNavLinkClassName}
-                >
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/fingerpicker"
-                  onClick={() => setOpen(false)}
-                  className={getNavLinkClassName}
-                >
-                  Finger Color Picker
-                </NavLink>
-              </li>
-            </ul>
+          {/* Desktop nav */}
+          <div className="hidden h-full items-center gap-1 md:flex">
+            <DropdownMenu label="Pickers" id="pickers-dropdown">
+              <ul>
+                {pickerLinks.map((link) => (
+                  <li key={link.to}>
+                    <NavLink to={link.to} className={desktopNavLinkClass}>
+                      {link.label}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </DropdownMenu>
           </div>
         </div>
+
+        <MobileDrawer open={mobileOpen} onClose={closeMobile}>
+          <ul className="flex flex-col gap-3 p-6">
+            <li>
+              <p className="text-2xl font-semibold">Pickers</p>
+              <ul className="mt-3 flex flex-col gap-3">
+                {pickerLinks.map((link) => (
+                  <li key={link.to}>
+                    <NavLink
+                      to={link.to}
+                      onClick={closeMobile}
+                      className={mobileNavLinkClass}
+                    >
+                      {link.label}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          </ul>
+        </MobileDrawer>
       </nav>
     </header>
   );
