@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import PickerIcon from "../../public/PLogo3.png";
 import { useClickOutside } from "../hooks/useClickOutside";
 
 type MobileDrawerProps = {
@@ -8,6 +7,8 @@ type MobileDrawerProps = {
   onClose: () => void;
   children: React.ReactNode;
 };
+
+const logoUrl = `${import.meta.env.BASE_URL}Logo.png`;
 
 export default function MobileDrawer({
   open,
@@ -38,7 +39,7 @@ export default function MobileDrawer({
       >
         <section className="flex justify-between p-6 border-b border-white/10">
           <Link to="/" onClick={onClose}>
-            <img src={PickerIcon} alt="Picker Logo" width="42" height="42" />
+            <img src={logoUrl} alt="Picker Logo" width="42" height="42" />
           </Link>
           <button
             type="button"

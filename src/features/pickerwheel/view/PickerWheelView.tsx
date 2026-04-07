@@ -1,16 +1,20 @@
-import InputList from "../components/InputList";
+import InputList from "../components/WheelInputList";
 import { useState } from "react";
+import Wheel from "../components/Wheel";
 
 const PickerWheelView = () => {
-  const [users, setUsers] = useState<string[]>([]); // Example users, replace with actual data when available
+  const [items, setItems] = useState<string[]>([]);
+  const [winner, setWinner] = useState<string | null>(null);
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-4">
-      <h1 className="text-3xl font-bold">Picker Wheel</h1>
-      <p className="text-lg text-gray-500">
-        This feature is coming soon! Stay tuned.
-      </p>
-      <InputList users={users} setUsers={setUsers} />
+    <div className="flex h-full w-full flex-col md:flex-row items-center justify-evenly gap-6 py-6 md:py-0">
+      <div className="flex flex-col items-center gap-4">
+        <Wheel items={items} onSelect={(item) => setWinner(item)} />
+        {winner && (
+          <p className="text-lg font-bold text-white">Winner: {winner}</p>
+        )}
+      </div>
+      <InputList items={items} setItems={setItems} />
     </div>
   );
 };

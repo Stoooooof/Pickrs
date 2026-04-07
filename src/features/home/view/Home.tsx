@@ -1,10 +1,10 @@
-import Logo from "../../../../public/PLogo3.png";
+const logoUrl = `${import.meta.env.BASE_URL}Logo.png`;
 
 const Home = () => {
   return (
     <div className="flex h-full w-full flex-col items-center px-6 text-center">
       <img
-        src={Logo}
+        src={logoUrl}
         alt="Pickr Logo"
         width="200"
         height="200"

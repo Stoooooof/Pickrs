@@ -15,13 +15,6 @@ const mobileNavLinkClass = ({ isActive }: { isActive: boolean }) =>
       : "text-white/70 hover:text-white active:text-white/55"
   }`;
 
-const desktopNavLinkClass = ({ isActive }: { isActive: boolean }) =>
-  `block px-3 py-2 text-sm transition-colors ${
-    isActive
-      ? "text-white"
-      : "text-white/70 hover:text-white active:text-white/55"
-  }`;
-
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -53,17 +46,7 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <div className="hidden h-full items-center gap-1 md:flex">
-            <DropdownMenu label="Pickers" id="pickers-dropdown">
-              <ul>
-                {pickerLinks.map((link) => (
-                  <li key={link.to}>
-                    <NavLink to={link.to} className={desktopNavLinkClass}>
-                      {link.label}
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-            </DropdownMenu>
+            <DropdownMenu />
           </div>
         </div>
 

@@ -1,66 +1,53 @@
-import { useRef, useState } from "react";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { NavLink } from "react-router-dom";
 
-type DropdownMenuProps = {
-  label: string;
-  id: string;
-  children: React.ReactNode;
-};
-
-export default function DropdownMenu({
-  label,
-  id,
-  children,
-}: DropdownMenuProps) {
-  const [open, setOpen] = useState(false);
-  const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const openMenu = () => {
-    if (closeTimeout.current) {
-      clearTimeout(closeTimeout.current);
-      closeTimeout.current = null;
-    }
-    setOpen(true);
-  };
-
-  const closeMenu = () => {
-    closeTimeout.current = setTimeout(() => setOpen(false), 150);
-  };
+export default function DropdownMenu() {
+  const components = [
+    {
+      title: "Picker Wheel",
+      description: "A fun way to make group decisions with a spinning wheel.",
+      href: "/pickerwheel",
+    },
+    {
+      title: "Finger Color Picker",
+      description:
+        "Place your fingers on the screen and get selected at random.",
+      href: "/fingerpicker",
+    },
+  ];
 
   return (
-    <div
-      className="relative flex h-full items-center"
-      onMouseEnter={openMenu}
-      onMouseLeave={closeMenu}
-    >
-      <button
-        aria-expanded={open}
-        aria-controls={id}
-        className={`inline-flex items-center gap-1 px-3 py-2 text-sm transition-colors ${
-          open
-            ? "text-white"
-            : "text-white/70 hover:text-white active:text-white/55"
-        }`}
-        type="button"
-      >
-        {label}
-        <span
-          aria-hidden="true"
-          className={`text-[10px] transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-        >
-          ▾
-        </span>
-      </button>
-
-      <section
-        id={id}
-        className={`absolute left-24 top-full w-56 -translate-x-1/2 rounded-b-xl border border-white/10 bg-neutral-950 py-2 shadow-xl transition-all duration-200 ${
-          open
-            ? "pointer-events-auto translate-y-0 opacity-100"
-            : "pointer-events-none -translate-y-1 opacity-0"
-        }`}
-      >
-        {children}
-      </section>
-    </div>
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Pickers</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="flex flex-col gap-2 p-4">
+              {components.map((component) => (
+                <li key={component.href}>
+                  <NavigationMenuLink
+                    render={({ className }) => (
+                      <NavLink
+                        to={component.href}
+                        className={`flex-row items-center gap-2 ${className}`}
+                      >
+                        {component.title}
+                      </NavLink>
+                    )}
+                  />
+                </li>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
   );
 }
