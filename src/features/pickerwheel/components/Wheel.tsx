@@ -24,6 +24,9 @@ const Wheel = ({ items, onSelect }: WheelProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const cumulativeRotation = useRef(0);
   const [spinning, setSpinning] = useState(false);
+
+  const disabled = spinning || !items.length;
+
   const placeHolderList = [
     "Placeholder 1",
     "Placeholder 2",
@@ -110,10 +113,10 @@ const Wheel = ({ items, onSelect }: WheelProps) => {
 
       <button
         onClick={spin}
-        disabled={spinning || !displayItems.length}
+        disabled={disabled}
         className="relative z-10 h-20 w-20 cursor-pointer rounded-full bg-white font-bold  transition-transform hover:scale-105 disabled:pointer-events-none disabled:opacity-50"
       >
-        <span className={`text-black ${!spinning ? "animate-pulse" : ""}`}>
+        <span className={`text-black ${!disabled ? "animate-pulse" : ""}`}>
           Spin
         </span>
       </button>
