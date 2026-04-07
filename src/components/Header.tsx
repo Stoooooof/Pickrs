@@ -5,7 +5,7 @@ import MobileDrawer from "./MobileDrawer.tsx";
 
 const pickerLinks = [
   { label: "Finger Color Picker", to: "/fingerpicker" },
-  { label: "Picker Wheel (TBD)", to: "/" },
+  { label: "Picker Wheel (TBD)", to: "/pickerwheel" },
 ];
 
 const mobileNavLinkClass = ({ isActive }: { isActive: boolean }) =>

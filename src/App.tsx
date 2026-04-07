@@ -3,6 +3,7 @@ import Fingerpicker from "./features/fingerpicker/view/Fingerpicker.tsx";
 import Header from "./components/Header.tsx";
 import { Outlet } from "react-router";
 import Home from "./features/home/view/Home.tsx";
+import PickerWheelView from "./features/pickerwheel/view/PickerWheelView.tsx";
 
 function Layout() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/fingerpicker" element={<Fingerpicker />} />
+        <Route path="/pickerwheel" element={<PickerWheelView />} />
       </Route>
     </Routes>
   );
