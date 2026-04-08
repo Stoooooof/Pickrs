@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router";
 import Fingerpicker from "./features/fingerpicker/view/Fingerpicker.tsx";
-import Header from "./components/Header.tsx";
+import Header from "./features/navbar/view/Navbar.tsx";
 import { Outlet } from "react-router";
 import Home from "./features/home/view/Home.tsx";
 import PickerWheelView from "./features/pickerwheel/view/PickerWheelView.tsx";

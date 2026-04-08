@@ -7,22 +7,9 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { NavLink } from "react-router-dom";
+import { linkItems } from "../utils/linkItems";
 
 export default function DropdownMenu() {
-  const components = [
-    {
-      title: "Picker Wheel",
-      description: "A fun way to make group decisions with a spinning wheel.",
-      href: "/pickerwheel",
-    },
-    {
-      title: "Finger Color Picker",
-      description:
-        "Place your fingers on the screen and get selected at random.",
-      href: "/fingerpicker",
-    },
-  ];
-
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -30,15 +17,15 @@ export default function DropdownMenu() {
           <NavigationMenuTrigger>Pickers</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="flex flex-col gap-2 p-4">
-              {components.map((component) => (
-                <li key={component.href}>
+              {linkItems.map((link) => (
+                <li key={link.to}>
                   <NavigationMenuLink
                     render={({ className }) => (
                       <NavLink
-                        to={component.href}
+                        to={link.to}
                         className={`flex-row items-center gap-2 ${className}`}
                       >
-                        {component.title}
+                        {link.label}
                       </NavLink>
                     )}
                   />
