@@ -5,11 +5,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 const PickerWheelView = () => {
-  const [items, setItems] = useState<string[]>([
-    "Placeholder 1",
-    "Placeholder 2",
-    "Placeholder 3",
-  ]);
+  const [items, setItems] = useState<string[]>([]);
   const [winner, setWinner] = useState<string | null>(null);
 
   return (
