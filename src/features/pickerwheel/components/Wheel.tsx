@@ -114,7 +114,7 @@ const Wheel = ({ items, onSelect }: WheelProps) => {
       <button
         onClick={spin}
         disabled={disabled}
-        className="relative z-10 h-20 w-20 cursor-pointer rounded-full bg-white font-bold  transition-transform hover:scale-105 disabled:pointer-events-none disabled:opacity-50"
+        className="relative z-10 h-20 w-20 cursor-pointer rounded-full bg-white font-bold transition-transform hover:scale-105 disabled:pointer-events-none disabled:opacity-50"
       >
         <span className={`text-black ${!disabled ? "animate-pulse" : ""}`}>
           Spin

@@ -1,4 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Field } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +14,7 @@ import {
   ItemContent,
   ItemTitle,
 } from "@/components/ui/item";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useState } from "react";
 
 type InputListProps = {
@@ -31,9 +38,14 @@ const WheelInputList = ({ items, setItems }: InputListProps) => {
   };
 
   return (
-    <Card className="w-96 min-h-128">
+    <Card className="relative w-96 md:h-164 h-72">
       <CardHeader>
-        <CardTitle>Add to wheel</CardTitle>
+        <CardTitle>Wheel Input</CardTitle>
+        <CardAction>
+          <Button disabled={!items.length} onClick={() => setItems([])}>
+            Clear List
+          </Button>
+        </CardAction>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleAddUser}>
@@ -49,26 +61,28 @@ const WheelInputList = ({ items, setItems }: InputListProps) => {
             </Button>
           </Field>
         </form>
-        <ul className="my-4">
-          {items.map((item, index) => (
-            <li key={index}>
-              <Item className="px-0">
-                <ItemContent>
-                  <ItemTitle>{item}</ItemTitle>
-                </ItemContent>
-                <ItemActions>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleRemoveUser(index)}
-                  >
-                    -
-                  </Button>
-                </ItemActions>
-              </Item>
-            </li>
-          ))}
-        </ul>
+        <ScrollArea className="md:h-134 h-42 rounded-md mt-4">
+          <ul className="my-4">
+            {items.map((item, index) => (
+              <li key={index}>
+                <Item className="px-0">
+                  <ItemContent>
+                    <ItemTitle>{item}</ItemTitle>
+                  </ItemContent>
+                  <ItemActions>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleRemoveUser(index)}
+                    >
+                      -
+                    </Button>
+                  </ItemActions>
+                </Item>
+              </li>
+            ))}
+          </ul>
+        </ScrollArea>
       </CardContent>
     </Card>
   );
