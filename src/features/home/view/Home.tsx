@@ -11,10 +11,11 @@ const Home = () => {
         className="mb-6 animate-pulse"
       />
       <h1 className="max-w-xl text-center text-4xl font-bold text-white">
-        Group decisions, minus the back-and-forth.
+        Why take decisions by yourself when you can leave it to chance?
       </h1>
       <p className="mt-4 max-w-lg text-base leading-7 text-white/70 md:text-lg">
-        Pickr gives you fast ways to settle simple choices together.
+        Pickr gives you a collection of randomizers to help you make decisions,
+        big or small.
       </p>
     </div>
   );
