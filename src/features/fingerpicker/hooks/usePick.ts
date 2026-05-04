@@ -9,7 +9,7 @@ const usePick = (activePointers: Record<number, ActivePointer>) => {
   const getCurrentPointers = useEffectEvent(() =>
     Object.values(activePointers),
   );
-  const timeoutRef = useRef<number | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [selectedPointerId, setSelectedPointerId] = useState<number | null>(
     null,
