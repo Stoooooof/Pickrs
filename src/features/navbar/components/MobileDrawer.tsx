@@ -13,7 +13,8 @@ import {
   ItemTitle,
 } from "@/components/ui/item";
 import { Link, NavLink } from "react-router-dom";
-import { Button } from "../../../components/ui/button";
+import { Button } from "@/components/ui/button";
+import { XIcon } from "lucide-react";
 import { useState } from "react";
 import { linkItems } from "../utils/linkItems";
 
@@ -29,13 +30,16 @@ const MobileDrawer = () => {
           ☰
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="w-full">
+      <DrawerContent>
         <DrawerHeader className="flex-row justify-between items-center">
           <Link to="/" onClick={() => setOpen(false)}>
             <img src={logoUrl} alt="Pickr Logo" className="h-8 w-8" />
           </Link>
           <DrawerClose>
-            <Button variant="outline">X</Button>
+            <Button variant="outline" size="icon-sm">
+              <XIcon />
+              <span className="sr-only">Close</span>
+            </Button>
           </DrawerClose>
         </DrawerHeader>
         <div className="flex w-full max-w-md flex-col gap-4 p-4">

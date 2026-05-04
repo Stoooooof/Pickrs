@@ -103,7 +103,7 @@ const Wheel = ({ items, onSelect }: WheelProps) => {
                 transformOrigin: "0 0",
               }}
             >
-              <span className="absolute text-xs font-bold text-white truncate max-w-[90%] left-1/2 -translate-y-1/2">
+              <span className="absolute text-xs font-bold text-white truncate max-w-[45%] left-1/2 -translate-y-1/2">
                 {item}
               </span>
             </div>

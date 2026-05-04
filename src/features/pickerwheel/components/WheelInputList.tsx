@@ -5,9 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Field } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Item,
   ItemActions,
@@ -15,30 +14,58 @@ import {
   ItemTitle,
 } from "@/components/ui/item";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import CsvUpload from "./CsvUpload";
 import { useState } from "react";
 
 type InputListProps = {
   items: string[];
   setItems: React.Dispatch<React.SetStateAction<string[]>>;
+  saveEnabled: boolean;
+  setSaveEnabled: (enabled: boolean) => void;
 };
 
-const WheelInputList = ({ items, setItems }: InputListProps) => {
+const parseItems = (value: string): string[] =>
+  value
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+const WheelInputList = ({
+  items,
+  setItems,
+  saveEnabled,
+  setSaveEnabled,
+}: InputListProps) => {
   const [inputValue, setInputValue] = useState("");
 
-  const handleAddUser = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newUser = inputValue.trim();
-    if (newUser) {
-      setItems([...items, newUser]);
+  const handleAddItems = () => {
+    const newItems = parseItems(inputValue);
+    if (newItems.length) {
+      setItems([...items, ...newItems]);
       setInputValue("");
     }
   };
-  const handleRemoveUser = (index: number) => {
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleAddItems();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleAddItems();
+    }
+  };
+
+  const handleRemoveItem = (index: number) => {
     setItems(items.filter((_, i) => i !== index));
   };
 
   return (
-    <Card className="relative w-96 md:h-164 h-72">
+    <Card className="relative flex-1 w-full md:flex-none md:w-[28rem] md:h-164">
       <CardHeader>
         <CardTitle>Wheel Input</CardTitle>
         <CardAction>
@@ -47,21 +74,44 @@ const WheelInputList = ({ items, setItems }: InputListProps) => {
           </Button>
         </CardAction>
       </CardHeader>
-      <CardContent>
-        <form onSubmit={handleAddUser}>
-          <Field orientation="horizontal" className="gap-2">
-            <Input
-              id="user-input"
-              placeholder="Item 1"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-            />
-            <Button type="submit" disabled={!inputValue.trim()}>
-              +
+      <CardContent className="flex flex-col flex-1 min-h-0">
+        <div className="flex items-center gap-2 pb-2">
+          <Checkbox
+            id="save-items"
+            checked={saveEnabled}
+            onCheckedChange={(checked) => setSaveEnabled(Boolean(checked))}
+          />
+          <Label
+            htmlFor="save-items"
+            className="text-sm cursor-pointer select-none"
+          >
+            Save items
+          </Label>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <Textarea
+            placeholder={"Item 1\nItem 2\nItem 3 ..."}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className="resize-none h-20"
+          />
+          <div className="flex gap-2 mt-3 w-full">
+            <Button
+              className="flex-1"
+              type="submit"
+              disabled={!inputValue.trim()}
+            >
+              Add
             </Button>
-          </Field>
+            <CsvUpload
+              onItemsLoaded={(newItems) =>
+                setItems((prev) => [...prev, ...newItems])
+              }
+            />
+          </div>
         </form>
-        <ScrollArea className="md:h-134 h-42 rounded-md mt-4">
+        <ScrollArea className="md:h-112 flex-1 min-h-0 rounded-md mt-2">
           <ul className="my-4">
             {items.map((item, index) => (
               <li key={index}>
@@ -73,7 +123,7 @@ const WheelInputList = ({ items, setItems }: InputListProps) => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => handleRemoveUser(index)}
+                      onClick={() => handleRemoveItem(index)}
                     >
                       -
                     </Button>

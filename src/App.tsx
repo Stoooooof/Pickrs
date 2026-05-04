@@ -7,7 +7,7 @@ import PickerWheelView from "./features/pickerwheel/view/PickerWheelView.tsx";
 
 function Layout() {
   return (
-    <div className="relative flex min-h-dvh w-full flex-col overflow-x-hidden">
+    <div className="relative flex h-dvh w-full flex-col overflow-x-hidden">
       <Header />
       <main className="min-h-0 flex flex-1 bg-neutral-950">
         <div className="min-h-0 w-full flex-1">
