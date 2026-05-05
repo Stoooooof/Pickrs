@@ -62,6 +62,9 @@ const usePick = (activePointers: Record<number, ActivePointer>) => {
 
   return {
     selectedPointerColor: selectedPointer?.color ?? null,
+    selectedPointerPosition: selectedPointer
+      ? { x: selectedPointer.x, y: selectedPointer.y }
+      : null,
   };
 };
 

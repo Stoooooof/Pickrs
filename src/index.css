@@ -72,6 +72,7 @@ body {
 
   --animate-idle-spin: idle-spin 30s linear infinite;
   --animate-winner-pop: winner-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-expand-from-point: expand-from-point 1100ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 
   @keyframes idle-spin {
     to {
@@ -82,6 +83,11 @@ body {
   @keyframes winner-pop {
     from { opacity: 0; scale: 0.3; }
     to   { opacity: 1; scale: 1; }
+  }
+
+  @keyframes expand-from-point {
+    from { clip-path: circle(80px at var(--expand-x) var(--expand-y)); }
+    to   { clip-path: circle(200vmax at var(--expand-x) var(--expand-y)); }
   }
 }
 
