@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <script>
-      const path = window.location.pathname.replace(/^\/Pickrs/, "");
-      window.location.replace("/Pickrs/?p=" + path);
+      const path = window.location.pathname.replace(/^\/Pickrs/, "") || "/";
+      sessionStorage.setItem("spa_redirect", path);
+      window.location.replace("/Pickrs/");
     </script>
   </head>
   <body></body>
